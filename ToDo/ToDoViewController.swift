@@ -10,10 +10,12 @@ import UIKit
 import CoreData
 
 class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet weak var toDoText: UITextField!
+
     
-    @IBOutlet weak var toDoTableView: UITableView!
     @IBOutlet weak var descriptionText: UITextField!
+    @IBOutlet weak var toDoText: UITextField!
+
+    @IBOutlet weak var toDoTableView: UITableView!
     
     var tasks = [Task]()
     
@@ -40,24 +42,26 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+
     @IBAction func saveTask(_ sender: UIButton) {
-        let toDo = toDoText.text
-        let summary = descriptionText.text
+        let toDoInsert = toDoText.text
+        let summaryInsert = descriptionText.text
         
-        if let task = Task(summary: summary, toDo: toDo){
+        if let task = Task(summary: summaryInsert, toDo: toDoInsert){
             do{
-               let managedContext = task.managedObjectContext
+                let managedContext = task.managedObjectContext
                 
-               try managedContext?.save()
+                try managedContext?.save()
                 
                 self.navigationController?.popViewController(animated: true)
             }catch{
-               print("The task couldn't be saved")
+                print("The task couldn't be saved")
             }
         }
     }
     
-    
+
+        
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
     }
@@ -68,6 +72,7 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         cell.textLabel?.text = task.toDo
         cell.detailTextLabel?.text = task.summary
+  
         
         return cell
     }
